@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  jupyter-spark:
+    image: jupyter/all-spark-notebook:latest
+    ports:
+      - "8888:8888"
+      - "4040-4080:4040-4080"
+    volumes:
+      - ./notebooks:/home/jovyan/work/notebooks/
+      - ./data:/home/jovyan/work/data/
+      - ./driver:/home/jovyan/work/jars/
+  postgres-data:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=warehouse
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
